@@ -107,14 +107,14 @@ NSInteger kMaxYear = 10000;
     
     
     NSDate *startDate = [calendar dateFromComponents:components];; // your start date
-    [components setYear:2000];
-    [components setMonth:12];
+    [components setYear:2001];
+    [components setMonth:1];
     [components setDay:01];
     NSDate *endDate = [calendar dateFromComponents:components]; // your end date
     NSDateComponents *monthDifference = [[NSDateComponents alloc] init];
     
     NSMutableArray *dates = [NSMutableArray array];
-    NSUInteger monthOffset = 0;
+    NSUInteger monthOffset = 1;
     NSDate *nextDate = startDate;
     do {
         [dates addObject:nextDate];
