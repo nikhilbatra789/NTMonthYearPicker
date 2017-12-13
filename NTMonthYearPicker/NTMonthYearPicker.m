@@ -11,14 +11,6 @@
 #import "NTMonthYearPicker.h"
 
 //
-// NTMonthYearPickerViewDelegate
-//
-
-@protocol NTMonthYearPickerViewDelegate
-- (void)didSelectDate;
-@end
-
-//
 // NTMonthYearPickerView
 //
 
@@ -30,7 +22,7 @@
 @property (nonatomic, retain) NSDate *date;
 @property (nonatomic, retain) NSDate *minimumDate;
 @property (nonatomic, retain) NSDate *maximumDate;
-@property (nonatomic,assign) id<NTMonthYearPickerViewDelegate> pickerDelegate;
+
 
 - (void)setDate:(NSDate *)date animated:(BOOL)animated;
 

@@ -10,12 +10,21 @@
 
 #import <UIKit/UIKit.h>
 
+//
+// NTMonthYearPickerViewDelegate
+//
+@protocol NTMonthYearPickerViewDelegate
+- (void)didSelectDate;
+    @end
+
 typedef enum {
     NTMonthYearPickerModeMonthAndYear,  // Display month and year
     NTMonthYearPickerModeYear           // Display just the year
 } NTMonthYearPickerMode;
 
 @interface NTMonthYearPicker : UIControl <NSCoding>
+
+@property (nonatomic,assign) id<NTMonthYearPickerViewDelegate> pickerDelegate;
 
 // The mode of the date picker - see the NTMonthYearPickerMode enum
 // Default is NTMonthYearPickerModeMonthAndYear
