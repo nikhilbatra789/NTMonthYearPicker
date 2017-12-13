@@ -32,14 +32,14 @@ UIPopoverController *popupCtrl;
     // This is optional; default is no min date
     [comps setDay:1];
     [comps setMonth:1];
-    [comps setYear:2000];
+    [comps setYear:2017];
     picker.minimumDate = [cal dateFromComponents:comps];
 
     // Set maximum date to next month
     // This is optional; default is no max date
     [comps setDay:0];
     [comps setMonth:1];
-    [comps setYear:0];
+    [comps setYear:50];
     picker.maximumDate = [cal dateByAddingComponents:comps toDate:[NSDate date] options:0];
 
     // Set initial date to last month

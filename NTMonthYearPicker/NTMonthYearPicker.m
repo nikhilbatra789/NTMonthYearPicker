@@ -59,8 +59,8 @@
 
 // Default min/max year values used if minimumDate/maximumDate is not set
 // These values match that of UIDatePicker
-const NSInteger kMinYear = 1;
-const NSInteger kMaxYear = 10000;
+NSInteger kMinYear = 1;
+NSInteger kMaxYear = 10000;
 
 #pragma mark - Initialization
 
@@ -104,11 +104,43 @@ const NSInteger kMaxYear = 10000;
 
 - (void)initPickerData {
     // Form list of months
+    
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDateComponents *components = [[NSDateComponents alloc] init];
+    [components setYear:2000];
+    [components setMonth:01];
+    [components setDay:01];
+    
+    
+    NSDate *startDate = [calendar dateFromComponents:components];; // your start date
+    [components setYear:2001];
+    [components setMonth:1];
+    [components setDay:01];
+    NSDate *endDate = [calendar dateFromComponents:components]; // your end date
+    NSDateComponents *monthDifference = [[NSDateComponents alloc] init];
+    
+    NSMutableArray *dates = [NSMutableArray array];
+    NSUInteger monthOffset = 1;
+    NSDate *nextDate = startDate;
+    do {
+        [dates addObject:nextDate];
+        [monthDifference setMonth:monthOffset++];
+        NSDate *d = [[NSCalendar currentCalendar] dateByAddingComponents:monthDifference toDate:startDate options:0];
+        nextDate = d;
+    } while([nextDate compare:endDate] == NSOrderedAscending);
+
+    //Form list of Months
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setLocale:self.locale];
-    _months = [dateFormatter monthSymbols];
-
+    [dateFormatter setDateFormat:@"MMM"];
+    NSMutableArray *months = [NSMutableArray array];
+    for (int i=1; i<=dates.count; i++) {
+        [months addObject: [NSString stringWithFormat:@"%02d(%@)",i,[dateFormatter stringFromDate:dates[i-1]]]];
+    }
+    _months = months;
+    
     // Form list of years
+    
     [dateFormatter setDateFormat:@"yyyy"];
     NSDateComponents *comps = [[NSDateComponents alloc] init];
 
@@ -190,6 +222,8 @@ const NSInteger kMaxYear = 10000;
         NSDateComponents *comps = [self.calendar components:(NSYearCalendarUnit|NSMonthCalendarUnit) fromDate:minimumDate];
         _minimumYear = comps.year;
         _minimumMonth = comps.month;
+        kMinYear = comps.year;
+        [self initPickerData];
     } else {
         _minimumYear = -1;
         _minimumMonth = -1;
@@ -206,6 +240,8 @@ const NSInteger kMaxYear = 10000;
         NSDateComponents *comps = [self.calendar components:(NSYearCalendarUnit|NSMonthCalendarUnit) fromDate:maximumDate];
         _maximumYear = comps.year;
         _maximumMonth = comps.month;
+        kMaxYear = comps.year;
+        [self initPickerData];
     } else {
         _maximumYear = -1;
         _maximumMonth = -1;
