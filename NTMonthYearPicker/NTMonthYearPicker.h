@@ -10,21 +10,20 @@
 
 #import <UIKit/UIKit.h>
 
-//
-// NTMonthYearPickerViewDelegate
-//
-@protocol NTMonthYearPickerViewDelegate
-- (void)didSelectDate;
-    @end
-
 typedef enum {
     NTMonthYearPickerModeMonthAndYear,  // Display month and year
     NTMonthYearPickerModeYear           // Display just the year
 } NTMonthYearPickerMode;
 
-@interface NTMonthYearPicker : UIControl <NSCoding>
+//
+// NTMonthYearPickerViewDelegate
+//
 
-@property (nonatomic,assign) id<NTMonthYearPickerViewDelegate> pickerDelegate;
+@protocol NTMonthYearPickerViewDelegate
+- (void)didSelectDate;
+    @end
+
+@interface NTMonthYearPicker : UIControl <NSCoding>
 
 // The mode of the date picker - see the NTMonthYearPickerMode enum
 // Default is NTMonthYearPickerModeMonthAndYear
@@ -54,4 +53,5 @@ typedef enum {
 // If animated is YES, animate the wheels to display the new date
 - (void)setDate:(NSDate *)date animated:(BOOL)animated;
 
+@property (nonatomic,weak) id<NTMonthYearPickerViewDelegate> pickerDelegate;
 @end

@@ -10,6 +10,8 @@
 
 #import "NTMonthYearPicker.h"
 
+
+
 //
 // NTMonthYearPickerView
 //
@@ -22,7 +24,7 @@
 @property (nonatomic, retain) NSDate *date;
 @property (nonatomic, retain) NSDate *minimumDate;
 @property (nonatomic, retain) NSDate *maximumDate;
-
+@property (nonatomic,weak) id<NTMonthYearPickerViewDelegate> pickerDelegate;
 
 - (void)setDate:(NSDate *)date animated:(BOOL)animated;
 
@@ -105,14 +107,14 @@ NSInteger kMaxYear = 10000;
     
     
     NSDate *startDate = [calendar dateFromComponents:components];; // your start date
-    [components setYear:2001];
-    [components setMonth:1];
+    [components setYear:2000];
+    [components setMonth:12];
     [components setDay:01];
     NSDate *endDate = [calendar dateFromComponents:components]; // your end date
     NSDateComponents *monthDifference = [[NSDateComponents alloc] init];
     
     NSMutableArray *dates = [NSMutableArray array];
-    NSUInteger monthOffset = 1;
+    NSUInteger monthOffset = 0;
     NSDate *nextDate = startDate;
     do {
         [dates addObject:nextDate];
@@ -127,7 +129,7 @@ NSInteger kMaxYear = 10000;
     [dateFormatter setDateFormat:@"MMM"];
     NSMutableArray *months = [NSMutableArray array];
     for (int i=1; i<=dates.count; i++) {
-        [months addObject: [NSString stringWithFormat:@"%02d(%@)",i,[dateFormatter stringFromDate:dates[i-1]]]];
+        [months addObject: [NSString stringWithFormat:@"%d(%@)",i,[dateFormatter stringFromDate:dates[i-1]]]];
     }
     _months = months;
     
@@ -487,6 +489,14 @@ numberOfRowsInComponent:(NSInteger)component {
 
 - (void)setMaximumDate:(NSDate *)maxDate {
     _pickerView.maximumDate = maxDate;
+}
+    
+- (void)setPickerDelegate:(id<NTMonthYearPickerViewDelegate>)pickerDelegate {
+    _pickerView.pickerDelegate = pickerDelegate;
+}
+
+-(id<NTMonthYearPickerViewDelegate>)pickerDelegate {
+    return _pickerView.pickerDelegate;
 }
 
 @end
